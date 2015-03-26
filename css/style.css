@@ -1,0 +1,14 @@
+#index-banner {
+    background-color: #ee6e73;
+}
+#index-banner .header {
+    color: #FFF;
+}
+
+#login-modal {
+    width: 20%;
+}
+
+#progress-modal {
+    width: 25%;
+}

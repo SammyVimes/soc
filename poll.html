@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="css/materialize.min.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+    <script src="js/jquery-1.11.2.js">void(0)</script>
+    <script src="js/materialize.js">void(0)</script>
+    <script src="js/poll.js">void(0)</script>
+    <script src="js/login.js">void(0)</script>
+</head>
+<body>
+
+    <script>
+        $(function() {
+            function loginListener(key) {
+                new Poller(key);
+            }
+            login(loginListener);
+        });
+    </script>
+
+    <div class="section" id="index-banner">
+        <div class="container">
+            <div class="row">
+                <div class="col s12 m9">
+                    <h1 class="header center-on-small-only">Генератор групп</h1>
+                    <h4 class="light red-text text-lighten-4 center-on-small-only">Узнайте кто вам подходит с помощью силы социологии!</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col s12 m9 l10">
+                <div id="polls" class="section scrollspy">
+
+                </div>
+                <div id="linear" class="section scrollspy">
+                    <h2 class="header">Люди</h2>
+                    <div id="people"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h4>Введите ключ</h4>
+            <div class="row">
+            <div class="input-field col s12">
+                <input id="key" type="text" class="validate">
+                <label for="key">Ключ</label>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button id="login-modal-ok" class="waves-effect waves-green btn-flat modal-action modal-close">OK</button>
+        </div>
+    </div>
+
+
+    <div id="progress-modal" class="modal">
+        <div class="modal-content">
+            <h4>Подождите</h4>
+            <div class="col s12 m4 l12 center">
+                <div class="preloader-wrapper big active">
+                    <div class="spinner-layer spinner-blue">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-red">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-yellow">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+
+                    <div class="spinner-layer spinner-green">
+                        <div class="circle-clipper left">
+                            <div class="circle"></div>
+                        </div><div class="gap-patch">
+                        <div class="circle"></div>
+                    </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="poll-template">
+        <div class="section scrollspy">
+            <h2 class="header poll-header" poll-header></h2>
+            <div class="lists">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="list-template">
+        <h3 class="header list-header" list-header></h3>
+        <div class="items">
+
+        </div>
+    </div>
+
+    <div id="list-item-template">
+        <div class="row">
+            <div class="hiddendiv id"></div>
+            <div class="list-item-title"></div>
+            <div class="list-item-description"></div>
+        </div>
+    </div>
+
+
+</body>
+</html>
