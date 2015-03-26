@@ -47,6 +47,7 @@ function login(loginListener, errorListener) {
 //        var deferred = $.Deferred();
 //        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, poll: mockResults, people: mockPeople, maxPeople: 3});
 //        deferred.promise().done(function(data) {
+            hideProgressModal();
             if (data.success) {
                 loginListener(key, data);
                 var personName = data.name;
