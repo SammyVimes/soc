@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col s12 m9">
                 <h1 class="header center-on-small-only">Генератор групп</h1>
-                <h4 class="light red-text text-lighten-4 center-on-small-only">Узнайте кто вам подходит с помощью силы социологии!</h4>
+                <h4 class="light red-text text-lighten-4 center-on-small-only">Узнайте, кто вам подходит, с помощью силы социологии!</h4>
                 <h5 id="your-name" class="light red-text text-lighten-4 center-on-small-only"></h5>
             </div>
         </div>
