@@ -97,7 +97,6 @@ function Poller(key, data) {
         var $pollsContainer = $("#polls");
         var $poll = $pollsContainer.find(".poll");
 
-        var pollsData = {};
         var pollId = $poll.find(".poll-id").val();
         var $lists = $poll.find(".poll-list");
         var listData = [];
@@ -111,12 +110,12 @@ function Poller(key, data) {
             }
             listData.push({listId: listId, listItems: items});
         });
-        pollsData = {pollId: pollId, listData: listData};
-        console.log("JSON to send: " + JSON.stringify(pollsData));
+        var dataToSend  = {pollId: pollId, listData: listData, action: "postData", key: key};
+        console.log("JSON to send: " + JSON.stringify(dataToSend));
         $.ajax({
             method: "POST",
-            url: "http://xomak.net/teambuilder/handler.php?action=postData&key=" + key,
-            data: JSON.stringify(pollsData)
+            url: "http://xomak.net/teambuilder/handler.php",
+            data: JSON.stringify(dataToSend)
         }).done(function(data) {
             if (data.success) {
                 alert("Информация отправлена.");
