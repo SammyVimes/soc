@@ -1,8 +1,21 @@
+html, body {
+    height: 100%;
+}
+
+
 #index-banner {
     background-color: #ee6e73;
 }
 #index-banner .header {
     color: #FFF;
+}
+
+.tab-row {
+    margin-top: 15px;
+}
+
+.main-container {
+    min-height: 100%;
 }
 
 #login-modal {
@@ -12,3 +25,26 @@
 #progress-modal {
     width: 25%;
 }
+
+.hidden, .template {
+    display: none;
+}
+
+.list-item.row {
+    margin-bottom: 0;
+}
+
+.list-item .card-panel {
+    margin-bottom: 0;
+    min-width: 100%;
+}
+
+.page-footer {
+    position: relative;
+}
+
+.waves-effect.waves-blue .waves-ripple {
+    color: rgba(238, 110, 115, 0.31);
+    background-color: rgba(238, 110, 115, 0.30);
+}
+

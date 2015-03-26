@@ -2,65 +2,61 @@
  * Created by Semyon on 26.03.2015.
  */
 
-function Poller(key) {
-
-    var progressModal = $("#progress-modal");
-    function showProgressModal(message) {
-        progressModal.openModal();
-    }
-
-    function hideProgressModal() {
-        progressModal.closeModal();
-    }
-
-    var pendingRequest = null;
-    function loadPoll() {
-//        pendingRequest = $.ajax({url: url + "?key=" + encodeURI(key), contentType: "application/json", dataType: "json"})
-        var deferred = $.Deferred();
-        deferred.resolve({success: true, polls: mockResults, people: mockPeople, maxPeople: 3});
-        deferred.promise().done(function(data) {
-                if (data.success) {
-                    displayPoll(data);
-                } else {
-                    //TODO: error handling
-                }
-            }, function(error) {
-
-            }).always(function() {
-                hideProgressModal();
-            });
-    }
+function Poller(key, data) {
 
     function createPersonView(person) {
-        return $('<p><input type="checkbox" id="person' + person.id + '" /><label for="person' + person.id + '">' + person.name + '</label></p>');
+        var id = person.id;
+        return $('<p><input type="checkbox" person-id="' + id + '"  id="person' + id + '" /><label for="person' + id + '">' + person.name + '</label></p>');
     }
 
     function createListItem(listItem) {
-        var $listItem = $("#list-item-template");
+        var $listItem = clone("#list-item-template");
+        $listItem.find(".item-id").val(listItem.id);
+        $listItem.find(".list-item-title").text(listItem.title);
+        if (listItem.description) {
+            $listItem.find(".list-item-description").text(listItem.description);
+        } else {
+            $listItem.find(".list-item-description").addClass("hidden");
+        }
+        return $listItem;
     }
 
     function createListView(list) {
         var $listView = clone("#list-template");
+        var $listItemsSection = $listView.find(".items");
+        $listView.find(".list-header").text(list.title);
+        $listView.find(".list-id").val(list.id);
         var listItems = list.items;
         for (var i = 0; i < listItems.length; i++) {
             var listItem = listItems[i];
-            $listView.append(createListItem(listItem));
+            $listItemsSection.append(createListItem(listItem));
+            $listItemsSection.sortable();
+            $listItemsSection.disableSelection();
         }
         return $listView;
     }
 
     function createPollView(poll) {
         var $poll = clone("#poll-template");
+        var $pollListSection = $poll.find(".lists");
+        $poll.find(".poll-header").text(poll.title);
+        $poll.find(".poll-id").val(poll.id);
         var pollLists = poll.lists;
         for (var i = 0; i < pollLists.length; i++) {
             var list = pollLists[i];
-            $poll.append(createListView(list));
+            $pollListSection.append(createListView(list));
         }
-
+        return $poll;
     }
 
     function displayPoll(data) {
 
+        var $polls = $("#polls");
+        var polls = data.polls;
+        for (var i = 0; i < polls.length; i++) {
+            var poll = polls[i];
+            $polls.append(createPollView(poll));
+        }
 
         var peopleContainer = $("#people");
         for (i = 0; i < data.people.length; i++) {
@@ -69,27 +65,51 @@ function Poller(key) {
         }
     }
 
-    loadPoll();
+    this.sendData = function() {
+        var data = {};
+        var selectedPeople = [];
+        var $peopleContainer = $("#people");
+        var $peopleCheckboxes = $peopleContainer.find("input");
+        $peopleCheckboxes.each(function(i, el) {
+            if (el.checked) {
+                selectedPeople.push($(el).attr("person-id"));
+            }
+        });
+        if (selectedPeople.length < 1) {
+            alert("Выберите хотя бы одного человека");
+            return;
+        }
+        data.selectedPeople = selectedPeople;
+        var $pollsContainer = $("#polls");
+        var $polls = $pollsContainer.find(".poll");
+        var pollsData = [];
+        $polls.each(function(__n, el) {
+            var $poll = $(el);
+            var pollId = $poll.find(".poll-id").val();
+            var $lists = $poll.find(".poll-list");
+            var listData = [];
+            $lists.each(function(__m, list) {
+                var $list = $(list);
+                var listId = $list.find(".list-id").val();
+                var items = [];
+                var $listItems = $list.find(".item-id");
+                for (var i = 0; i < $listItems.length; i++) {
+                    items.push($listItems[i].value);
+                }
+                listData.push({listId: listId, listItems: items});
+            });
+            pollsData.push({pollId: pollId, listData: listData});
+        });
+        alert("Будем считать, что информацию отправили. JSON смотри в консоли.");
+        console.log("JSON to send: " + JSON.stringify(pollsData));
+        //$.ajax(url: "&key=" + key);
+    };
+
+    displayPoll(data);
 
 }
 
 function clone(selector) {
-    return $(selector).clone();
+    var $clone = $(selector).clone();
+    return $clone.children(0);
 }
-
-
-var mockResults = [
-    {
-        title: "",
-        lists: [
-            {
-                title: "",
-                items: [{ title: "", id: ""}]
-            }
-        ]
-    }
-];
-
-var mockPeople = [
-    {id: "0", name: "Иванов Иван"}, {id: "1", name: "Петров Пётр"}
-];
