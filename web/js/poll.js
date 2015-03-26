@@ -70,13 +70,10 @@ function Poller(key, data) {
 
     function displayPoll(data) {
         var $polls = $("#polls");
-        var polls = data.polls;
-        for (var i = 0; i < polls.length; i++) {
-            var poll = polls[i];
-            $polls.append(createPollView(poll));
-        }
+        var poll = data.poll;
+        $polls.append(createPollView(poll));
         var peopleContainer = $("#people");
-        for (i = 0; i < data.people.length; i++) {
+        for (var i = 0; i < data.people.length; i++) {
             var person = data.people[i];
             peopleContainer.append(createPersonView(person));
         }
@@ -98,31 +95,51 @@ function Poller(key, data) {
         }
         data.selectedPeople = selectedPeople;
         var $pollsContainer = $("#polls");
-        var $polls = $pollsContainer.find(".poll");
-        var pollsData = [];
-        $polls.each(function(__n, el) {
-            var $poll = $(el);
-            var pollId = $poll.find(".poll-id").val();
-            var $lists = $poll.find(".poll-list");
-            var listData = [];
-            $lists.each(function(__m, list) {
-                var $list = $(list);
-                var listId = $list.find(".list-id").val();
-                var items = [];
-                var $listItems = $list.find(".item-id");
-                for (var i = 0; i < $listItems.length; i++) {
-                    items.push($listItems[i].value);
-                }
-                listData.push({listId: listId, listItems: items});
-            });
-            pollsData.push({pollId: pollId, listData: listData});
+        var $poll = $pollsContainer.find(".poll");
+
+        var pollsData = {};
+        var pollId = $poll.find(".poll-id").val();
+        var $lists = $poll.find(".poll-list");
+        var listData = [];
+        $lists.each(function(__m, list) {
+            var $list = $(list);
+            var listId = $list.find(".list-id").val();
+            var items = [];
+            var $listItems = $list.find(".item-id");
+            for (var i = 0; i < $listItems.length; i++) {
+                items.push($listItems[i].value);
+            }
+            listData.push({listId: listId, listItems: items});
         });
-        alert("Будем считать, что информацию отправили. JSON смотри в консоли.");
+        pollsData = {pollId: pollId, listData: listData};
         console.log("JSON to send: " + JSON.stringify(pollsData));
-        //$.ajax(url: "&key=" + key);
+        $.ajax({
+            method: "POST",
+            url: "http://xomak.net/teambuilder/handler.php?action=postData&key=" + key,
+            data: JSON.stringify(pollsData)
+        }).done(function(data) {
+            if (data.success) {
+                alert("Информация отправлена.");
+            } else {
+                alert("Ошибка: " + data.error);
+            }
+        }, function(error) {
+            alert("Ошибка: " + data.error);
+        }).always(function() {
+            hideProgressModal();
+        });
     };
 
     displayPoll(data);
+
+    var progressModal = $("#progress-modal");
+    function showProgressModal(message) {
+        progressModal.openModal();
+    }
+
+    function hideProgressModal() {
+        progressModal.closeModal();
+    }
 
 }
 

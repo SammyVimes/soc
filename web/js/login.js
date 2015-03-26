@@ -32,7 +32,6 @@ function login(loginListener, errorListener) {
         loadData(key);
     }
 
-
     var progressModal = $("#progress-modal");
     function showProgressModal(message) {
         progressModal.openModal();
@@ -44,10 +43,10 @@ function login(loginListener, errorListener) {
 
     function loadData(key) {
         showProgressModal();
-//      $.ajax({url: url + "?key=" + encodeURI(key), contentType: "application/json", dataType: "json"}).done(function(data) {
-        var deferred = $.Deferred();
-        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, polls: mockResults, people: mockPeople, maxPeople: 3});
-        deferred.promise().done(function(data) {
+        $.ajax({url: "http://xomak.net/teambuilder/handler.php?action=login&key=" + encodeURI(key), contentType: "application/json", dataType: "json"}).done(function(data) {
+//        var deferred = $.Deferred();
+//        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, poll: mockResults, people: mockPeople, maxPeople: 3});
+//        deferred.promise().done(function(data) {
             if (data.success) {
                 loginListener(key, data);
                 var personName = data.name;
@@ -72,38 +71,37 @@ function login(loginListener, errorListener) {
 
 var mockText = "Описание того что здесь происходит вообще";
 
-var mockResults = [
-    {
-        id: 0,
-        title: "Опрос для создания команды",
-        lists: [
-            {
-                id: "0",
-                title: "Цели",
-                description: "Описание первого списка",
-                items: [
-                    { title: "Цель1", id: "0", description: ""},
-                    { title: "Цель2", id: "1", description: ""},
-                    { title: "Цель3", id: "2", description: "Описание цели3"},
-                    { title: "Цель4", id: "3", description: ""}
-                ]
-            },
-            {
-                id: "1",
-                title: "Инструменты",
-                description: "Описание второго списка",
-                items: [
-                    { title: "Инструмент1", id: "0", description: ""},
-                    { title: "Инструмент2", id: "1", description: ""},
-                    { title: "Инструмент3", id: "3", description: "Описание инструмента3"},
-                    { title: "Инструмент4", id: "4", description: "Описание инструмента4"},
-                    { title: "Инструмент5", id: "5", description: "Описание инструмента5"},
-                    { title: "Инструмент6", id: "6", description: ""}
-                ]
-            }
-        ]
-    }
-];
+var mockResults =
+{
+    id: 0,
+    title: "Опрос для создания команды",
+    lists: [
+        {
+            id: "0",
+            title: "Цели",
+            description: "Описание первого списка",
+            items: [
+                { title: "Цель1", id: "0", description: ""},
+                { title: "Цель2", id: "1", description: ""},
+                { title: "Цель3", id: "2", description: "Описание цели3"},
+                { title: "Цель4", id: "3", description: ""}
+            ]
+        },
+        {
+            id: "1",
+            title: "Инструменты",
+            description: "Описание второго списка",
+            items: [
+                { title: "Инструмент1", id: "0", description: ""},
+                { title: "Инструмент2", id: "1", description: ""},
+                { title: "Инструмент3", id: "3", description: "Описание инструмента3"},
+                { title: "Инструмент4", id: "4", description: "Описание инструмента4"},
+                { title: "Инструмент5", id: "5", description: "Описание инструмента5"},
+                { title: "Инструмент6", id: "6", description: ""}
+            ]
+        }
+    ]
+};
 
 var mockPeople = [
     {id: "0", name: "Иванов Иван"}, {id: "1", name: "Петров Пётр"},
