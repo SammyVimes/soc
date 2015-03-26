@@ -101,7 +101,7 @@
 
 <div id="info-modal" class="modal">
     <div class="modal-content">
-        <h4>?Название диалога?</h4>
+        <h4>Информация</h4>
         <div class="row">
             <span id="info"></span>
         </div>
