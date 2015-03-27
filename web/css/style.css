@@ -20,10 +20,12 @@ html, body {
 
 #login-modal {
     width: 20%;
+    min-width: 300px;
 }
 
 #progress-modal {
     width: 25%;
+    min-width: 300px;
 }
 
 .hidden, .template {
