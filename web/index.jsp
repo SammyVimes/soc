@@ -32,7 +32,7 @@
             alert("Error: " + error);
             window.location.hash = "";
             setTimeout(function() {
-                login(loginListener); //hehe
+                login(loginListener, errorListener); //hehe
             }, 1000);
         }
         login(loginListener, errorListener);
@@ -58,12 +58,12 @@
     <div class="row tab-row">
         <div class="col s12 m9 l10">
             <div class="col s12">
-                <ul class="tabs z-depth-1">
+                <ul class="tabs z-depth-2">
                     <li class="tab col s3"><a class="active" href="#poll_tab">Опрос</a></li>
                     <li class="tab col s3"><a href="#people_tab">Люди</a></li>
                 </ul>
             </div>
-            <div id="poll_tab" class="col s12">
+            <div id="poll_tab" class="col s12 card-panel z-depth-2">
                 <div id="polls" class="section">
 
                 </div>
@@ -71,9 +71,9 @@
                     <button class="center btn waves-effect waves-light red lighten-3" onclick=" $('ul.tabs').tabs('select_tab', 'people_tab');">Дальше</button>
                 </div>
             </div>
-            <div id="people_tab" class="col s12">
+            <div id="people_tab" class="col s12 card-panel z-depth-2">
                 <div id="linear" class="section">
-                    <h2 class="header">Люди</h2>
+                    <h4 class="header">Люди</h4>
                     <div id="people"></div>
                 </div>
                 <div class="col s12 m4 l12 center">

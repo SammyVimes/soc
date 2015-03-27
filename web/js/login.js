@@ -2,13 +2,13 @@
  * Created by Semyon on 26.03.2015.
  */
 
+var modalLoginBundle = null;
 function login(loginListener, errorListener) {
 
     function hashLogin(hash) {
         finish(hash);
     }
 
-    var modalLoginBundle = null;
     function modalLogin() {
         if (!modalLoginBundle) {
             modalLoginBundle = {};
@@ -65,7 +65,7 @@ function login(loginListener, errorListener) {
     }
 
     var hash = window.location.hash;
-    hash ? hashLogin(hash) : modalLogin();
+    hash ? hashLogin(hash.substring(1)) : modalLogin();
 
 }
 
