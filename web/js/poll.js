@@ -80,7 +80,6 @@ function Poller(key, data) {
     }
 
     this.sendData = function() {
-        var data = {};
         var selectedPeople = [];
         var $peopleContainer = $("#people");
         var $peopleCheckboxes = $peopleContainer.find("input");
@@ -93,7 +92,6 @@ function Poller(key, data) {
             alert("Выберите хотя бы одного человека");
             return;
         }
-        data.selectedPeople = selectedPeople;
         var $pollsContainer = $("#polls");
         var $poll = $pollsContainer.find(".poll");
 
@@ -110,10 +108,12 @@ function Poller(key, data) {
             }
             listData.push({listId: listId, listItems: items});
         });
-        var dataToSend  = {pollId: pollId, listData: listData, action: "postData", key: key};
+        var dataToSend  = {pollId: pollId, listData: listData, action: "postData", key: key, selectedPeople: selectedPeople};
         console.log("JSON to send: " + JSON.stringify(dataToSend));
         $.ajax({
             method: "POST",
+            contentType: "application/json",
+            dataType: "json",
             url: "http://xomak.net/teambuilder/handler.php",
             data: JSON.stringify(dataToSend)
         }).done(function(data) {
@@ -123,7 +123,7 @@ function Poller(key, data) {
                 alert("Ошибка: " + data.error);
             }
         }, function(error) {
-            alert("Ошибка: " + data.error);
+            alert("Ошибка: " + error);
         }).always(function() {
             hideProgressModal();
         });
