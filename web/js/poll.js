@@ -115,7 +115,7 @@ function Poller(key, data) {
             contentType: "application/json",
             dataType: "json",
             url: "http://xomak.net/teambuilder/handler.php",
-            data: "key=" + key + "&action=postData&data=" + JSON.stringify(dataToSend)
+            data: {key: key, action: "postData", data: JSON.stringify(dataToSend)}
         }).done(function(data) {
             if (data.success) {
                 alert("Информация отправлена.");
