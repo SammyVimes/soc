@@ -47,7 +47,7 @@ function login(loginListener, errorListener) {
             url: "http://xomak.net/teambuilder/handler.php",
             contentType: "application/json",
             dataType: "json",
-            data: {action: "login", key: encodeURI(key)},
+            data: JSON.stringify({action: "login", key: encodeURI(key)}),
             method: "POST"
         }).done(function(data) {
 //        var deferred = $.Deferred();
