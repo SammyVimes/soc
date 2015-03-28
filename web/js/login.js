@@ -63,8 +63,8 @@ function login(loginListener, errorListener) {
             } else {
                 errorListener(data.error);
             }
-        }, function(error) {
-
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert("Ошибка: " + textStatus);
         }).always(function() {
             hideProgressModal();
         });

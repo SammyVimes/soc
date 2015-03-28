@@ -123,8 +123,8 @@ function Poller(key, data) {
             } else {
                 alert("Ошибка: " + data.error);
             }
-        }, function(error) {
-            alert("Ошибка: " + error);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            alert("Ошибка: " + textStatus);
         }).always(function() {
             hideProgressModal();
         });
