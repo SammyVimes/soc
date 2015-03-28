@@ -43,7 +43,13 @@ function login(loginListener, errorListener) {
 
     function loadData(key) {
         showProgressModal();
-        $.ajax({url: "http://xomak.net/teambuilder/handler.php?action=login&key=" + encodeURI(key), contentType: "application/json", dataType: "json"}).done(function(data) {
+        $.ajax({
+            url: "http://xomak.net/teambuilder/handler.php",
+            contentType: "application/json",
+            dataType: "json",
+            data: "action=login&key=" + encodeURI(key),
+            method: "POST"
+        }).done(function(data) {
 //        var deferred = $.Deferred();
 //        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, poll: mockResults, people: mockPeople, maxPeople: 3});
 //        deferred.promise().done(function(data) {
