@@ -5,6 +5,7 @@
 function Poller(key, data) {
 
     var maxSelectedUsers = data.maxPeople;
+    var minSelectedUsers = data.minPeople ? data.minPeople : 0;
     var curSelected = 0;
 
     function createPersonView(person) {
@@ -88,7 +89,7 @@ function Poller(key, data) {
                 selectedPeople.push($(el).attr("person-id"));
             }
         });
-        if (selectedPeople.length < 1) {
+        if (selectedPeople.length < minSelectedUsers) {
             alert("Выберите хотя бы одного человека");
             return;
         }
@@ -108,7 +109,7 @@ function Poller(key, data) {
             }
             listData.push({listId: listId, listItems: items});
         });
-        var dataToSend  = {pollId: pollId, listData: listData, action: "postData", key: key, selectedPeople: selectedPeople};
+        var dataToSend  = {pollId: pollId, listData: listData, selectedPeople: selectedPeople};
         console.log("JSON to send: " + JSON.stringify(dataToSend));
         $.ajax({
             method: "POST",
