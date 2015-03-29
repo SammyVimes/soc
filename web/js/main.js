@@ -138,15 +138,15 @@ var TestController = function()
 	{
 		var specific = formQuestions[formQuestion].specific;
 		formContent.html("");
-		formDescription.html(formQuestions[formQuestion].question);
+        formDescription.html("");
 		if(specific == 1)
 		{
-
             var input= $('<div class="input-field"><input id="input" type="text" name="formInput" class="validate"><label for="input">' + formQuestions[formQuestion].question + '</label></div>');
 			formContent.append(input);
 		}
 		else
 		{
+            formDescription.html(formQuestions[formQuestion].question);
 			var ul = $("<ul></ul>");
 			for(var key in formQuestions[formQuestion].answers)
 			{
@@ -256,7 +256,7 @@ var TestController = function()
 				markDiv.attr("data-row", i);
 				markDiv.attr("data-mark",j);
 				markDiv.click(matrixMarkHandler);
-				markTd.addClass("mark");
+				markTd.addClass("mark waves-effect waves-teal");
 				markDiv.html(j);
 				markTd.append(markDiv);
 				tr.append(markTd);
@@ -277,6 +277,7 @@ var TestController = function()
 		}
 		matrixValues = [];
 		marksTable.find("div").removeClass("active");
+		marksTable.find("td").removeClass("td-active");
 		matrixCurrentStart = matrixCurrent;
 		marksTable.find("td:first-child").each(function(index, element) {
 			$(element).html(matrixQuestions[matrixCurrent]);
@@ -286,6 +287,8 @@ var TestController = function()
 	}
 	var matrixMarkHandler = function() {
 		$(this).parents("tr").find("div").removeClass("active");
+		$(this).parents("tr").find("td").removeClass("td-active");
+		$(this).parent().addClass("td-active");
 		$(this).addClass("active");
 		matrixValues[parseInt($(this).attr("data-row"))] = parseInt($(this).attr("data-mark"));
 	}
