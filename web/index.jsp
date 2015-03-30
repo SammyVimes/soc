@@ -40,7 +40,13 @@
         $("#finish").click(function() {
             poller.sendData();
         });
+        var tabs = $('ul.tabs');
+        tabs.off('click');
     });
+    function goToPeopleTab() {
+        var tabs = $('ul.tabs').tabs();
+        tabs.tabs('select_tab', 'people_tab');
+    }
 </script>
 
 <div class="section" id="index-banner">
@@ -69,7 +75,7 @@
 
                 </div>
                 <div class="col s12 m4 l12 center">
-                    <button class="center btn waves-effect waves-light red lighten-3" id="continue" onclick="$('ul.tabs').tabs('select_tab', 'people_tab');">Дальше</button>
+                    <button class="center btn waves-effect waves-light red lighten-3" id="continue" onclick="goToPeopleTab();">Дальше</button>
                     <button class="center btn waves-effect waves-light red lighten-3 hidden" id="no-people-finish">Завершить</button>
                 </div>
             </div>
