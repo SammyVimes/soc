@@ -4,9 +4,10 @@
 
 function Poller(key, data) {
 
-    var maxSelectedUsers = data.maxPeople;
+    var maxSelectedUsers = data.maxPeople ? data.maxPeople : 0;
     var minSelectedUsers = data.minPeople ? data.minPeople : 0;
     var curSelected = 0;
+    var disabled = false;
 
     function createPersonView(person) {
         var id = person.id;
@@ -73,14 +74,25 @@ function Poller(key, data) {
         var $polls = $("#polls");
         var poll = data.poll;
         $polls.append(createPollView(poll));
-        var peopleContainer = $("#people");
-        for (var i = 0; i < data.people.length; i++) {
-            var person = data.people[i];
-            peopleContainer.append(createPersonView(person));
+        if (maxSelectedUsers > 0) {
+            var peopleContainer = $("#people");
+            $("#people-tab-selector").removeClass("hidden");
+            for (var i = 0; i < data.people.length; i++) {
+                var person = data.people[i];
+                peopleContainer.append(createPersonView(person));
+            }
+        } else {
+            $("#no-people-finish").removeClass("hidden");
+            $("#continue").addClass("hidden");
+            $("#poll-tab-selector").addClass("match-parent-width");
         }
     }
 
     this.sendData = function() {
+        if (disabled) {
+            alert("Вы уже заполнили форму");
+            return;
+        }
         var selectedPeople = [];
         var $peopleContainer = $("#people");
         var $peopleCheckboxes = $peopleContainer.find("input");
@@ -89,7 +101,7 @@ function Poller(key, data) {
                 selectedPeople.push($(el).attr("person-id"));
             }
         });
-        if (selectedPeople.length < minSelectedUsers) {
+        if (maxSelectedUsers > 0 && selectedPeople.length < minSelectedUsers) {
             alert("Выберите хотя бы одного человека");
             return;
         }
@@ -120,6 +132,7 @@ function Poller(key, data) {
         }).done(function(data) {
             if (data.success) {
                 alert("Информация отправлена.");
+                disabled = true;
             } else {
                 alert("Ошибка: " + data.error);
             }

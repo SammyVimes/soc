@@ -51,7 +51,7 @@ function login(loginListener, errorListener) {
             method: "POST"
         }).done(function(data) {
 //        var deferred = $.Deferred();
-//        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, poll: mockResults, people: mockPeople, maxPeople: 3});
+//        deferred.resolve({text: mockText, name: "Первак какой-то", success: true, poll: mockResults, people: mockPeople, maxPeople: 3, peopleText: peopleDescription});
 //        deferred.promise().done(function(data) {
             hideProgressModal();
             if (data.success) {
@@ -59,6 +59,7 @@ function login(loginListener, errorListener) {
                 var personName = data.name;
                 $("#your-name").text("(" + personName + ")");
                 $("#info").text(data.text);
+                $("#people-description").text(data.peopleText);
                 $("#info-modal").openModal();
             } else {
                 errorListener(data.error);
@@ -77,7 +78,7 @@ function login(loginListener, errorListener) {
 
 
 var mockText = "Описание того что здесь происходит вообще";
-
+var peopleDescription = "Что-то про людей";
 var mockResults =
 {
     id: 0,

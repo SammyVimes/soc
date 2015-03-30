@@ -29,7 +29,7 @@ html, body {
 }
 
 .hidden, .template {
-    display: none;
+    display: none !important;
 }
 
 .list-item.row {
@@ -50,3 +50,12 @@ html, body {
     background-color: rgba(238, 110, 115, 0.30);
 }
 
+.match-parent-width {
+    width: 100% !important;
+}
+
+.caption {
+    font-size: 1.25rem;
+    font-weight: 300;
+    margin-bottom: 30px;
+}

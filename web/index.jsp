@@ -60,8 +60,8 @@
         <div class="col s12 m9 l10">
             <div class="col s12">
                 <ul class="tabs z-depth-2">
-                    <li class="tab col s3"><a class="active" href="#poll_tab">Опрос</a></li>
-                    <li class="tab col s3"><a href="#people_tab">Люди</a></li>
+                    <li class="tab col s3" id="poll-tab-selector"><a class="active" href="#poll_tab">Опрос</a></li>
+                    <li class="tab col s3 hidden" id="people-tab-selector"><a href="#people_tab">Люди</a></li>
                 </ul>
             </div>
             <div id="poll_tab" class="col s12 card-panel z-depth-2">
@@ -69,12 +69,16 @@
 
                 </div>
                 <div class="col s12 m4 l12 center">
-                    <button class="center btn waves-effect waves-light red lighten-3" onclick=" $('ul.tabs').tabs('select_tab', 'people_tab');">Дальше</button>
+                    <button class="center btn waves-effect waves-light red lighten-3" id="continue" onclick="$('ul.tabs').tabs('select_tab', 'people_tab');">Дальше</button>
+                    <button class="center btn waves-effect waves-light red lighten-3 hidden" id="no-people-finish">Завершить</button>
                 </div>
             </div>
             <div id="people_tab" class="col s12 card-panel z-depth-2">
                 <div id="linear" class="section">
                     <h4 class="header">Люди</h4>
+                    <div class="row">
+                        <p class="caption col s12" id="people-description"></p>
+                    </div>
                     <div id="people"></div>
                 </div>
                 <div class="col s12 m4 l12 center">
